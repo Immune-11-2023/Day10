@@ -60,20 +60,40 @@ function findTheBiggestNumber(matrix) {
 // 🔥🔥
 const brands = [
   "Uniqlo",
-  "Bershka",
-  "Bershka",
+  "Bershka", // Bershka
+  "Bershka", // Bershka
   "Zara",
   "H&M",
   "Guchi",
   "Naike",
-  "Bershka",
+  "Bershka", // Bershka
 ]
 
-function getBrandRepeatedTimes(brands, singleBrand) {}
+function getBrandRepeatedTimes(brands, singleBrand) {
+  let count = 0
+  for (let brand of brands) {
+    if (brand === singleBrand) count++
+  }
+  return count
+}
 
 // 4 EFICIENCIA... ==> checkfortarget...
+// ENUNCIADO:
+// numbers = [2,7,11,15], target = 13,
+// [2,7,11,15]
 //🔥🔥🔥
-function checkForTarget(numbers, target) {}
+
+// https://leetcode.com/problems/two-sum/
+var twoSum = function (nums, target) {
+  const includedNumbers = {}
+
+  for (let i = 0; i < nums.length; i++) {
+    const missingNumber = target - nums[i]
+    if (missingNumber in includedNumbers)
+      return [includedNumbers[missingNumber], i]
+    includedNumbers[nums[i]] = i
+  }
+}
 
 // 5 CAN U GUESS MY NUMBER? BINARY SEARCH
 // 🔥
@@ -82,14 +102,20 @@ function checkForTarget(numbers, target) {}
 // Ejemplo => [3, 7, 12, 16, 20, 24, 28, 33, 37, 41, 45, 50, 55, 60, 65] , 55 // boolean => true, false
 
 // Dado un array de números y un número "target", tenemos que devolver si target está incluido en nuestra lista de números
+// function guessNumber(numbers, target) {
+//   // EL enfoque más intuitivo es iterar sobre nuestro array y comprobar si a cada paso, al iterar sobre nuestro array, el elemento que estemos analizando es target.
+//   for (let i = 0; i < numbers.length; i++) {
+//     // Vamos comparando: 3 === 55 ??? Nope , 7 === 55 ??? Nope... Hasta llegar a 55 === 55.
+//     if (numbers[i] === target) return true
+//   }
+//   return false
+// }
+
 function guessNumber(numbers, target) {
-  // EL enfoque más intuitivo es iterar sobre nuestro array y comprobar si a cada paso, al iterar sobre nuestro array, el elemento que estemos analizando es target.
-  for (let i = 0; i < numbers.length; i++) {
-    // Vamos comparando: 3 === 55 ??? Nope , 7 === 55 ??? Nope... Hasta llegar a 55 === 55.
-    if (numbers[i] === target) return true
-  }
-  return false
+  return numbers.includes(target)
 }
+
+guessNumber([3, 7, 12, 16, 20, 24, 28, 33, 37, 41, 45, 50, 55, 60, 65], 55)
 
 // SOLUCIÓN AVANZADA (SUPER CHULA 🔥🔥🔥🔥🔥).
 // LEED esto SOLO si comprendéis el 100% de lo que hemos visto. 🥸
@@ -100,31 +126,31 @@ function guessNumber(numbers, target) {
 // Pensad qué pasaría si nuestro juego fuera del 1 al 1.000.000.000.000 ... Nos pasaríamos la vida contando.
 // En estos casos pensamos en un enfoque más eficiente. En el caso de este problema, dicho enfoque se conoce como "Binary Search" o Búsqueda Binaria en el mundo de Algoritmia.
 
-function guessNumber(numbers, target) {
-  // La idea de este enfoque es reducir nuestra muestra a la mitad a cada iteración.
-  // En el caso del rango 1... 100, empezaríamos partiendo del 50 y haciendo la pregunta: ¿Es el número que estás pensando mayor o menor que 50?
-  let left = 0
-  let right = numbers.length - 1
-  // Creamos dos punteros, el puntero izquierdo apunta al primer índice, y el segundo al último...
-  // De esta forma, podemos siempre apuntar a la mitad => El índice intermedio entre left y right...
+// function guessNumber(numbers, target) {
+//   // La idea de este enfoque es reducir nuestra muestra a la mitad a cada iteración.
+//   // En el caso del rango 1... 100, empezaríamos partiendo del 50 y haciendo la pregunta: ¿Es el número que estás pensando mayor o menor que 50?
+//   let left = 0
+//   let right = numbers.length - 1
+//   // Creamos dos punteros, el puntero izquierdo apunta al primer índice, y el segundo al último...
+//   // De esta forma, podemos siempre apuntar a la mitad => El índice intermedio entre left y right...
 
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2) // Ejemplo: inicialmente left en nuestro ejemplo es 0, right es 14, mid es 7 => que apunta al elemento intermedio: 33
+//   while (left <= right) {
+//     const mid = Math.floor((left + right) / 2) // Ejemplo: inicialmente left en nuestro ejemplo es 0, right es 14, mid es 7 => que apunta al elemento intermedio: 33
 
-    if (numbers[mid] === target) {
-      return true
-    } // Igual que en nuestro juego, nos preguntamos si el número de en medio en nuestro rango es el objetivo. Si lo es, entonces hemos adivinado el número y el juego se detiene
-    else if (numbers[mid] > target) right = mid - 1
-    // Si el número a adivinar es menor, entonces reducimos el rango a la mitad izquierda...
-    // Sabiendo esto, podemos reducir el rango de números a la mitad...
-    // Ejemplo con el juego del 1 al 100 => Estoy pensando en el número 25. Empiezo por la mitad, el 50.
-    // Como 25 es menor a 50, tengo que quedarme con la muestra => [1, ... 49]
-    else {
-      left = mid + 1 // Si nuestro objetivo fuera mayor, tendríamos que quedarnos con la muestra de la derecha: [51, .... 100]
-    }
-  }
-  return false // Finalmente, si el número no se encuentra en el rango definido retornamos false...
-}
+//     if (numbers[mid] === target) {
+//       return true
+//     } // Igual que en nuestro juego, nos preguntamos si el número de en medio en nuestro rango es el objetivo. Si lo es, entonces hemos adivinado el número y el juego se detiene
+//     else if (numbers[mid] > target) right = mid - 1
+//     // Si el número a adivinar es menor, entonces reducimos el rango a la mitad izquierda...
+//     // Sabiendo esto, podemos reducir el rango de números a la mitad...
+//     // Ejemplo con el juego del 1 al 100 => Estoy pensando en el número 25. Empiezo por la mitad, el 50.
+//     // Como 25 es menor a 50, tengo que quedarme con la muestra => [1, ... 49]
+//     else {
+//       left = mid + 1 // Si nuestro objetivo fuera mayor, tendríamos que quedarnos con la muestra de la derecha: [51, .... 100]
+//     }
+//   }
+//   return false // Finalmente, si el número no se encuentra en el rango definido retornamos false...
+// }
 
 // Podéis comprobar la solución aquí: https://leetcode.com/problems/binary-search/submissions/
 // En este caso particular nos preguntar por los índices así que la solución sería esta:
